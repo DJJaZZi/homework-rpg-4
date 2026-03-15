@@ -6,6 +6,7 @@ import java.util.List;
 public abstract class UnitLeaf implements CombatNode {
     private final String name;
     private int health;
+    protected int power;
     private final int attackPower;
 
     protected UnitLeaf(String name, int health, int attackPower) {
@@ -30,16 +31,31 @@ public abstract class UnitLeaf implements CombatNode {
     }
 
     @Override
+    public int getPower() {
+        return power;
+    }
+
+    @Override
     public void takeDamage(int amount) {
-        if (!isAlive()) {
-            return;
+        this.health -= amount;
+        if (this.health < 0) {
+            this.health = 0;
         }
-        health = Math.max(0, health - Math.max(0, amount));
     }
 
     @Override
     public boolean isAlive() {
         return health > 0;
+    }
+
+    @Override
+    public void add(CombatNode node) {
+        throw new UnsupportedOperationException("Cannot add a node to a single unit.");
+    }
+
+    @Override
+    public void remove(CombatNode node) {
+        throw new UnsupportedOperationException("Cannot remove a node from a single unit.");
     }
 
     @Override
