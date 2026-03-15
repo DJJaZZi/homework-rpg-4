@@ -64,7 +64,7 @@ public class RaidGroup implements CombatNode {
     }
 
     @Override
-    public void printTree(String indent) {]
+    public void printTree(String indent) {
         System.out.println(indent + "== RAID: " + name + " [Total HP=" + getHealth() + ", Total ATK=" + getAttackPower() + "] ==");
         for (CombatNode child : children) {
             child.printTree(indent + "  ");
