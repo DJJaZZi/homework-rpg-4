@@ -9,8 +9,9 @@ public abstract class UnitLeaf implements CombatNode {
     protected int power;
     private final int attackPower;
 
-    protected UnitLeaf(String name, int health, int attackPower) {
+    protected UnitLeaf(String name,int power, int health, int attackPower) {
         this.name = name;
+        this.power = power;
         this.health = health;
         this.attackPower = attackPower;
     }
