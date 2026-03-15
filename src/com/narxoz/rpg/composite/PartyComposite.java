@@ -27,45 +27,55 @@ public class PartyComposite implements CombatNode {
 
     @Override
     public int getHealth() {
-        // TODO: Composite aggregation
-        // Return total health of all children (and nested children).
-        return 0;
+        return children.stream().mapToInt(CombatNode::getHealth).sum();
+    }
+
+    @Override
+    public int getPower() {
+        int totalPower = 0;
+        for (CombatNode child : children) {
+            if (child.isAlive()) {
+                totalPower += child.getPower();
+            }
+        }
+        return totalPower;
     }
 
     @Override
     public int getAttackPower() {
-        // TODO: Composite aggregation
-        // Return total attack of alive children only.
-        return 0;
+        return children.stream().mapToInt(CombatNode::getAttackPower).sum();
     }
 
     @Override
     public void takeDamage(int amount) {
-        // TODO: Composite distribution
-        // Distribute incoming damage across alive children.
-        // Suggested baseline:
-        // 1) Collect alive children
-        // 2) Split amount evenly (or using your own documented rule)
-        // 3) Apply damage to each child
+        List<CombatNode> living = children.stream()
+                .filter(CombatNode::isAlive)
+                .toList();
+
+        if (living.isEmpty()) return;
+
+        int splitDamage = amount / living.size();
+        for (CombatNode child : living) {
+            child.takeDamage(splitDamage);
+        }
     }
 
     @Override
     public boolean isAlive() {
-        // TODO: Composite liveness
-        // Return true when at least one child is alive.
-        return false;
+        return children.stream().anyMatch(CombatNode::isAlive);
     }
 
     @Override
     public List<CombatNode> getChildren() {
-        return Collections.unmodifiableList(children);
+        return children;
     }
 
     @Override
     public void printTree(String indent) {
-        // TODO: Tree visualization
-        // Print this node and recurse into children with increased indent.
-        System.out.println(indent + "+ " + name + " [TODO: compute HP/ATK]");
+        System.out.println(indent + "+ Party: " + name + " [Total HP=" + getHealth() + "]");
+        for (CombatNode child : children) {
+            child.printTree(indent + "  ");
+        }
     }
 
     private List<CombatNode> getAliveChildren() {
