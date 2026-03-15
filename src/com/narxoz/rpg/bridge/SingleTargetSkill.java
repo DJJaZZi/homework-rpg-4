@@ -9,8 +9,10 @@ public class SingleTargetSkill extends Skill {
 
     @Override
     public void cast(CombatNode target) {
-        // TODO: Single-target Bridge action
-        // 1) Resolve final damage through effect implementor
-        // 2) Apply to target node
+        int damage = resolvedDamage();
+        System.out.println("-> Casting [Single-Target] " + getSkillName() + " (" + getEffectName() + ") on "
+                + target.getName() + " for " + damage + " damage.");
+
+        target.takeDamage(damage);
     }
 }
