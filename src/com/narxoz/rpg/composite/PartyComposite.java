@@ -67,7 +67,7 @@ public class PartyComposite implements CombatNode {
 
     @Override
     public List<CombatNode> getChildren() {
-        return children;
+        return Collections.unmodifiableList(children);
     }
 
     @Override
@@ -79,7 +79,8 @@ public class PartyComposite implements CombatNode {
     }
 
     private List<CombatNode> getAliveChildren() {
-        // TODO: helper for takeDamage()
-        return new ArrayList<>();
+        return children.stream()
+                .filter(CombatNode::isAlive)
+                .toList();
     }
 }
