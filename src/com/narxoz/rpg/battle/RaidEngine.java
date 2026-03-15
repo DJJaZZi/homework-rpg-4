@@ -29,7 +29,7 @@ public class RaidEngine {
 
         while(teamA.isAlive() && teamB.isAlive() && rounds < maxRounds){
             rounds++;
-            result.addLine("\\n[Round \" + rounds + \"]");
+            result.addLine("\n[Round " + rounds + "]");
 
             boolean critA = random.nextInt(100) < 20;
             result.addLine(teamA.getName() + " uses " + teamASkill.getSkillName() + (critA ? " (CRITICAL HIT!)" : ""));
